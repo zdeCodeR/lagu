@@ -1,5 +1,10 @@
+# karaoke_otuan.py
+# Karaoke sinkron pakai file .lrc
+# Tampilkan kata demi kata biar lebih keren
+
 import time
 import re
+import sys
 
 def load_lrc(filename):
     pattern = re.compile(r"\[(\d+):(\d+\.\d+)\](.*)")
@@ -15,19 +20,33 @@ def load_lrc(filename):
                 lirik.append((waktu, teks))
     return sorted(lirik, key=lambda x: x[0])
 
+def tampilkan_per_kata(teks, durasi):
+    # split teks jadi kata-kata
+    kata = teks.split()
+    if not kata:
+        return
+    jeda = durasi / len(kata)  
+    for k in kata:
+        sys.stdout.write(k + " ")
+        sys.stdout.flush()
+        time.sleep(jeda)
+    print()  
+
 def main():
     lirik = load_lrc("otuan.lrc")
 
-    print("=== Karaoke O'Tuan ===\n")
+    print("=== O'Tuan ===\n")
     start = time.time()
-    idx = 0
-    while idx < len(lirik):
-        sekarang = time.time() - start
-        if sekarang >= lirik[idx][0]:
-            print(">>> " + lirik[idx][1]) 
-            idx += 1
+    for i in range(len(lirik)):
+        waktu, teks = lirik[i]
+        # hitung durasi baris ini (sampai baris berikutnya)
+        if i < len(lirik) - 1:
+            durasi = lirik[i+1][0] - waktu
         else:
-            time.sleep(0.05)
+            durasi = 3 
+        while time.time() - start < waktu:
+            time.sleep(0.01)
+        tampilkan_per_kata(teks, durasi)
 
     print("\n=== Tamat ===")
 
