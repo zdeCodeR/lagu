@@ -16,13 +16,13 @@ def load_lrc(filename):
                 lirik.append((waktu, teks))
     return sorted(lirik, key=lambda x: x[0])
 
-def tampilkan_per_kata(teks, durasi):
-    kata = teks.split()
-    if not kata:
+def tampilkan_per_huruf(teks, durasi):
+    if not teks:
+        print()
         return
-    jeda = durasi / len(kata)  
-    for k in kata:
-        sys.stdout.write(k + " ")
+    jeda = durasi / len(teks)  
+    for h in teks:
+        sys.stdout.write(h)
         sys.stdout.flush()
         time.sleep(jeda)
     print()  
@@ -34,13 +34,14 @@ def main():
     start = time.time()
     for i in range(len(lirik)):
         waktu, teks = lirik[i]
+        # durasi = waktu baris berikutnya - waktu baris sekarang
         if i < len(lirik) - 1:
             durasi = lirik[i+1][0] - waktu
         else:
             durasi = 3 
         while time.time() - start < waktu:
             time.sleep(0.01)
-        tampilkan_per_kata(teks, durasi)
+        tampilkan_per_huruf(teks, durasi)
 
     print("\n=== Tamat ===")
 
