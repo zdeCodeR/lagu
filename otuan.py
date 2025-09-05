@@ -17,7 +17,6 @@ def load_lrc(filename):
     return sorted(lirik, key=lambda x: x[0])
 
 def tampilkan_per_kata(teks, durasi):
-    # split teks jadi kata-kata
     kata = teks.split()
     if not kata:
         return
