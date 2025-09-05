@@ -1,7 +1,3 @@
-# karaoke_otuan.py
-# Karaoke sinkron pakai file .lrc
-# Tampilkan kata demi kata biar lebih keren
-
 import time
 import re
 import sys
