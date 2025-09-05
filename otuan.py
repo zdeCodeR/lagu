@@ -34,7 +34,6 @@ def main():
     start = time.time()
     for i in range(len(lirik)):
         waktu, teks = lirik[i]
-        # durasi = waktu baris berikutnya - waktu baris sekarang
         if i < len(lirik) - 1:
             durasi = lirik[i+1][0] - waktu
         else:
